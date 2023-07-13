@@ -351,6 +351,9 @@ e_endwin() ->
 e_initscr() ->
     erlang:nif_error(not_initialized, []).
 
+e_newterm(_Strlen, _String, _OutFile, _Infile) ->
+    erlang:nif_error(not_initialized, []).
+
 e_cbreak() ->
     erlang:nif_error(not_initialized, []).
 
