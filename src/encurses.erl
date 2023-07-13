@@ -60,6 +60,7 @@
         has_colors/0,
         init_pair/3,
         initscr/0,
+        newterm/3,
         keypad/1,
         keypad/2,
         move/2,
@@ -122,7 +123,11 @@ endwin() ->
 
 initscr() ->
     e_initscr().
-
+%% newterm
+newterm(Type, OutFile, InFile) when is_list(Type) andalso
+        is_integer(OutFile) andalso is_integer(InFile) ->
+    Str = lists:flatten(Type),
+    e_newterm(erlang:iolist_size(Str), Str, OutFile, InFile).
 %% cbreak
 
 cbreak() ->
