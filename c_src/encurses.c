@@ -365,6 +365,23 @@ e_initscr(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
     return enif_make_long(env, 0);
 }
 
+// newterm
+
+static ERL_NIF_TERM
+e_newterm(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
+{
+    long length, out, in;
+    enif_get_long(env, argv[0], &length);
+    char buff[length];
+    enif_get_string(env, argv[1], buff, length+1, ERL_NIF_LATIN1);
+    enif_get_long(env, argv[3], &out);
+    enif_get_long(env, argv[4], &in);
+
+    enif_mutex_lock(g_lock);
+    slots[0] = (SCREEN *)newterm(buff, out, in);
+    enif_mutex_unlock(g_lock);
+    return enif_make_long(env, 0);
+}
 // cbreak
 
 static ERL_NIF_TERM
@@ -983,7 +1000,7 @@ static ErlNifFunc nif_funcs[] =
     {"e_endwin", 0, e_endwin},
 
     {"e_initscr", 0, e_initscr},
-
+    {"e_newterm", 4, e_newterm},
     {"e_cbreak", 0, e_cbreak},
     {"e_nocbreak", 0, e_nocbreak},
 
