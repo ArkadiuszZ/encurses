@@ -378,7 +378,7 @@ e_newterm(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
     enif_get_long(env, argv[4], &in);
 
     enif_mutex_lock(g_lock);
-    slots[0] = (SCREEN *)newterm(buff, out, in);
+    slots[0] = (WINDOW *)newterm(buff, (FILE *) out, (FILE *) in);
     enif_mutex_unlock(g_lock);
     return enif_make_long(env, 0);
 }
